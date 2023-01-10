@@ -10,7 +10,8 @@ class EncodedImage:
     def __init__(self, s, p) -> None:
         self.text = s
         self.path = p
-        self.img_data = load_image(self.path)
+        # self.img_data = load_image(self.path)
+        self.img_data = load_image(f'{self.path}cat.jpg')
 
         self.height = self.img_data.shape[0]
         self.width = self.img_data.shape[1]
@@ -21,10 +22,12 @@ class EncodedImage:
         font = ImageFont.truetype("~/Library/Fonts/Arial Unicode.ttf", self.text_size)
         draw = ImageDraw.Draw(img)
         draw.text(self.text_ul, self.text, fill=(0, 255, 0), font=font)
-        img.save("/Users/arulh/Documents/Projects/ImageEncoder/resources/text.jpg")
+        # img.save("/Users/arulh/Documents/Projects/ImageEncoder/resources/text.jpg")
+        img.save(f'{self.path}text.jpg')
 
     def encode_image(self):
-        text = Image.open("/Users/arulh/Documents/Projects/ImageEncoder/resources/text.jpg")
+        # text = Image.open("/Users/arulh/Documents/Projects/ImageEncoder/resources/text.jpg")
+        text = Image.open(f'{self.path}text.jpg')
         text_data = np.asarray(text)
 
         for y in range(self.text_ul[1], self.text_ul[1]+self.text_size + 10): # range(self.text_ul[1], self.height)
@@ -34,7 +37,8 @@ class EncodedImage:
 
     def create_image(self):
         data = Image.fromarray(self.img_data)
-        data.save("encoded_cat.jpg")
+        # data.save("encoded_cat.jpg")
+        data.save(f'{self.path}encoded_cat.jpg')
 
     def decode_image(self):
         print("hello")
@@ -66,6 +70,3 @@ def set_lob(pixel, key):
 
 def correct_colour(pixel):
     return (pixel[0] < 30) and (pixel[1] > 220) and (pixel[2] < 30)
-
-def black(pixel):
-    return pixel[0] == 0 and pixel[1] == 0 and pixel[2] == 0
