@@ -10,34 +10,29 @@ class EncodedImage:
     def __init__(self, s, p) -> None:
         self.text = s
         self.path = p
-        # self.img_data = load_image(self.path)
         self.img_data = load_image(f'{self.path}cat.jpg')
 
         self.height = self.img_data.shape[0]
         self.width = self.img_data.shape[1]
 
     def create_text_image(self):
-        # img = Image.open("/Users/arulh/Documents/Projects/ImageEncoder/resources/cat.jpg")
         img = Image.new(mode="RGB", size=(self.width, self.height))
         font = ImageFont.truetype("~/Library/Fonts/Arial Unicode.ttf", self.text_size)
         draw = ImageDraw.Draw(img)
         draw.text(self.text_ul, self.text, fill=(0, 255, 0), font=font)
-        # img.save("/Users/arulh/Documents/Projects/ImageEncoder/resources/text.jpg")
         img.save(f'{self.path}text.jpg')
 
     def encode_image(self):
-        # text = Image.open("/Users/arulh/Documents/Projects/ImageEncoder/resources/text.jpg")
         text = Image.open(f'{self.path}text.jpg')
         text_data = np.asarray(text)
 
-        for y in range(self.text_ul[1], self.text_ul[1]+self.text_size + 10): # range(self.text_ul[1], self.height)
-            for x in range(self.text_ul[0], self.width): # range(self.text_ul[0], self.width)
+        for y in range(self.text_ul[1], self.text_ul[1]+self.text_size + 10):
+            for x in range(self.text_ul[0], self.width):
                 if (correct_colour(text_data[y][x])):
                     self.img_data[y][x] = set_lob(self.img_data[y][x], self.key)
 
     def create_image(self):
         data = Image.fromarray(self.img_data)
-        # data.save("encoded_cat.jpg")
         data.save(f'{self.path}encoded_cat.jpg')
 
     def decode_image(self):
