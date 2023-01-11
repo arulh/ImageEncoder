@@ -8,7 +8,9 @@ def testConstructor():
     e = EncodedImage("Hello World", "../resources/")
     e.create_text_image()
     e.encode_image()
-    e.create_image()
+    e.create_image("encoded_cat.png")
+    e.decode_image()
+    e.create_image("decoded_cat.png")
 
     assert (e.text == "Hello World")
     assert (e.width == 4032)
