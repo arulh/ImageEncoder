@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Encode Image</h1>
+<p>Upload any PNG file and enter the desired encrypted text.</p>
+<form enctype="multipart/form-data" method="post" class="main">
+    <input type="text" name="encoded_text" value="enter text">
+    <br>
+    <input type="file" name="uploaded_image">
+    <br>
+    <input type="submit" id="submit_button" value="ENCODE IMAGE">
+</form>
+<div id="main" class="main">
+    {% if image_submited == True %}
+    <img src="{{ url_for('static', filename='resources/uploaded_image.png') }}" width="500">
+    <img src="{{ url_for('static', filename='resources/encoded_image.png') }}" width="500">
+    <p>Your encryption key: <b>{{ key }}</b></p>
+    {% endif %}
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
