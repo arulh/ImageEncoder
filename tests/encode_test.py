@@ -13,8 +13,6 @@ def testConstructor():
     e.create_image("decoded_cat.png")
 
     assert (e.text == "Hello World")
-    # assert (e.width == 4032)
-    # assert (e.height == 3024)
 
 if __name__ == "__main__":
     start = timeit.default_timer()

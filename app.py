@@ -1,12 +1,11 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request
 from encode import EncodedImage
-import os
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    return render_template("home.html")
 
 @app.route("/encode", methods=["GET", "POST"])
 def encode():
