@@ -1,5 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Home page</h1>
-<p>Hello world this is cool</p>
+<div id="home_page">
+    <h1>Image Encoder</h1>
+    <p style="text-align: left;"> This application allows you to 
+        insert hidden messages securely within images using a technique called <b>steganography</b>. 
+        The encryption algorithm manipulates the lower order bits of desired pixels with the key such that
+        the encrypted image is indistinguishable from the original. Higher resolution images conceal text even better.
+        Simply upload an image along with your desired text and you will get an encrypted image
+        along with a key that can be used later on to decrypt the image.
+    </p>
+</div>
+<div id="row">
+    <div class="column">
+        <h3>Original image</h3>
+        <img src="../static/home_page/uploaded_image.png" width="100%">
+    </div>
+    <div class="column">
+        <h3>Encoded image</h3>
+        <img src="../static/home_page/encoded_image.png" width="100%">
+    </div>
+    <div class="column">
+        <h3>Decoded image</h3>
+        <img src="../static/home_page/decoded_image.png" width="100%">
+    </div>
+</div>
 {% endblock %}
