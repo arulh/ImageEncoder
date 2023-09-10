@@ -5,7 +5,7 @@ import random
 class EncodedImage:
     text_ul = (50, 50)
     text_size = 75
-    key = random.randint(1000,9999)
+    key = None
 
     def __init__(self, s, p) -> None:
         self.text = s
@@ -15,6 +15,7 @@ class EncodedImage:
         self.height = self.img_data.shape[0]
         self.width = self.img_data.shape[1]
 
+    # creates blank image with only the text overlayed on the image
     def create_text_image(self):
         img = Image.new(mode="RGB", size=(self.width, self.height))
         font = ImageFont.truetype("~/Library/Fonts/Arial Unicode.ttf", self.text_size)
@@ -22,7 +23,10 @@ class EncodedImage:
         draw.text(self.text_ul, self.text, fill=(0, 255, 0), font=font)
         img.save(f'{self.path}text.png')
 
+    # encodes the image
     def encode_image(self):
+        self.key = random.randint(1000, 9999)
+
         text = Image.open(f'{self.path}text.png')
         text_data = np.asarray(text)
 
@@ -31,10 +35,12 @@ class EncodedImage:
                 if (correct_colour(text_data[y][x])):
                     self.img_data[y][x] = set_lob(self.img_data[y][x], self.key)
 
+    # saves the image to desired path
     def create_image(self, name):
         data = Image.fromarray(self.img_data)
         data.save(f'{self.path}{name}')
 
+    # decodes the image
     def decode_image(self, key):
         for y in range(self.text_ul[1], self.text_ul[1]+self.text_size + 10):
             for x in range(self.text_ul[0], self.width):
@@ -50,7 +56,8 @@ def load_image(path):
     return data
 
 def set_lob(pixel, key):
-    key = key%65
+    print(pixel)
+    key = key%64
     # Extract the RGB values of the pixel
     r = pixel[0]
     g = pixel[1]
@@ -71,7 +78,7 @@ def correct_colour(pixel):
     return (pixel[0] == 0) and (pixel[1] == 255) and (pixel[2] == 0)
 
 def hidden_pixel(pixel, key):
-    key = key%65
+    key = key%64
     # Extract the RGB values of the pixel
     r = pixel[0]
     g = pixel[1]
@@ -79,11 +86,6 @@ def hidden_pixel(pixel, key):
 
     # Convert the key to a binary string
     binary_key = bin(key)[2:].zfill(6)
-
-    # Extract the least significant bits of the RGB values
-    r_lsb = r & 0b00000011
-    g_lsb = g & 0b00000011
-    b_lsb = b & 0b00000011
 
     # Decode the least significant bits of the RGB values using the key bits
     decoded_r = (r & 0b11111100) | int(binary_key[0:2], 2)
